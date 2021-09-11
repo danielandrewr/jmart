@@ -47,7 +47,7 @@ public class Jmart
     }
     
     public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
-        int originalPrice = (discountedPrice * 100) / (int) discountPercentage;
+        int originalPrice = (int)(100 - discountPercentage) / 100 * discountedPrice;
         
         return originalPrice;   
     }
@@ -61,6 +61,6 @@ public class Jmart
     }
     
     public static int getAdminFee(int price) {
-        return price * (int) (getCommissionMultiplier());
+        return (int)(price * getCommissionMultiplier());
     }
 }
