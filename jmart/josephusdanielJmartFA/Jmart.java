@@ -10,26 +10,57 @@ package josephusdanielJmartFA;
 public class Jmart
 {
     // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Jmart
-     */
-    public Jmart()
-    {
-        // initialise instance variables
-        x = 0;
+    public static void main(String[] args) {
+        System.out.println(getAdminFee(1000));
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    
+    public static int getPromo() {
+        return 0;
+    }
+    
+    public static String getCustomer() {
+        return "oop";
+    }
+    
+    public static float getDiscountPercentage(int before, int after) {
+        float discountPercentage;
+        if (before <= after) {
+            discountPercentage = 0.0f;
+        } else {
+            discountPercentage = (float)(before - after)/100;
+        }
+        
+        return discountPercentage;
+    }
+    
+    public static int getDiscountedPrice(int price, float discountPercentage) {
+        int discountedPrice;
+        double discountPrice;
+        
+        if (discountPercentage == 100.0f) {
+            discountPrice = price;
+        } else {
+            discountPrice = ((discountPercentage/100) * price);
+        }
+        
+        return discountedPrice = price - (int) discountPrice;
+    }
+    
+    public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
+        int originalPrice = (discountedPrice * 100) / (int) discountPercentage;
+        
+        return originalPrice;   
+    }
+    
+    public static float getCommissionMultiplier() {
+        return 0.05f;
+    }
+    
+    public static int getAdjustedPrice(int price) {
+        return (price * (int) (getCommissionMultiplier())) + price;
+    }
+    
+    public static int getAdminFee(int price) {
+        return price * (int) (getCommissionMultiplier());
     }
 }
