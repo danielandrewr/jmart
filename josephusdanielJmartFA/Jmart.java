@@ -11,7 +11,7 @@ public class Jmart
 {
     // instance variables - replace the example below with your own
     public static void main(String[] args) {
-        System.out.println(getAdminFee(1000));
+        System.out.println(getOriginalPrice(900, 10.0f));
     }
     
     public static int getPromo() {
@@ -47,7 +47,7 @@ public class Jmart
     }
     
     public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
-        int originalPrice = (int)(100 - discountPercentage) / 100 * discountedPrice;
+        int originalPrice = (int)((discountedPrice * 100) / (100 - discountPercentage));
         
         return originalPrice;   
     }
