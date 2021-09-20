@@ -13,8 +13,16 @@ public class Jmart
     public static void main(String[] args) {
     }
     
-    public static Product create() {
+    public static Product createProduct() {
         PriceTag pt = new PriceTag(10000, 10);
         return new Product("Piring Cantik", 5, false, pt, ProductCategory.KITCHEN);
     }
-}
+    
+    public static Coupon createCoupon() {
+        return new Coupon("TOMY", 69696969, Type.REBATE, 50000, 10000);
+    }
+    
+    public static ShipmentDuration createShipmentDuration() {
+        return null;
+    }  
+ }
