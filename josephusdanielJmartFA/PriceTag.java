@@ -37,7 +37,7 @@ public class PriceTag
             return BOTTOM_FEE;
         }
         
-        return (hargaDiskon * (COMMISSION_MULTIPLIER));
+        return (hargaDiskon * COMMISSION_MULTIPLIER);
     }
     
     private double getDiscountedPrice() {

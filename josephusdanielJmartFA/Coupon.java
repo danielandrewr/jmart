@@ -26,19 +26,17 @@ public class Coupon
     
     public boolean canApply(PriceTag pricetag) {
         
-        if ((used != false) && (pricetag.getAdjustedPrice() >= this.minimum)) {
+        if ((used == false) && (pricetag.getAdjustedPrice() >= this.minimum)) {
             return true;
         }
         return false;
     }
     
     public double apply(PriceTag pricetag) {
-        if (canApply(pricetag) == true) {
-            if (this.type == Type.DISCOUNT) {
-                return pricetag.getAdjustedPrice() - (this.cut/100);
-            }
+        this.used = true;
+        if (this.type == Type.DISCOUNT) {
+            return pricetag.getAdjustedPrice() - (pricetag.getAdjustedPrice() * (this.cut/100));
         }
-        
         return pricetag.getAdjustedPrice() - this.cut;
     }
 }

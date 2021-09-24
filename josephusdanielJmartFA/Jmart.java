@@ -14,7 +14,7 @@ public class Jmart
     }
     
     public static Product createProduct() {
-        PriceTag pt = new PriceTag(10000, 10);
+        PriceTag pt = new PriceTag(100000, 10);
         return new Product("Piring Cantik", 5, false, pt, ProductCategory.KITCHEN);
     }
     
@@ -23,6 +23,6 @@ public class Jmart
     }
     
     public static ShipmentDuration createShipmentDuration() {
-        return null;
+        return new ShipmentDuration(ShipmentDuration.KARGO);
     }  
  }

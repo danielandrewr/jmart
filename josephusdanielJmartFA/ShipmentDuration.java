@@ -2,29 +2,33 @@ package josephusdanielJmartFA;
 
 import java.util.EnumSet;
 
-enum Shipments { KARGO, SAME_DAY, NEXT_DAY, REGULER, INSTANT };
-
 public class ShipmentDuration
-{
-    // instance variables - replace the example below with your own
-    EnumSet<Shipments> sd = EnumSet.of(Shipments.INSTANT, Shipments.SAME_DAY, 
-        Shipments.NEXT_DAY, Shipments.REGULER, Shipments.KARGO);
+{      
+    // instance variables
+    public static final ShipmentDuration INSTANT = new ShipmentDuration(00000001);
+    public static final ShipmentDuration SAME_DAY = new ShipmentDuration(00000010);
+    public static final ShipmentDuration NEXT_DAY = new ShipmentDuration(00000100);
+    public static final ShipmentDuration REGULER = new ShipmentDuration(00001000);
+    public static final ShipmentDuration KARGO = new ShipmentDuration(00010000);
+    
     private int bit;
 
-    /**
-     * Constructor for objects of class ShipmentDuration
-     */
-    public ShipmentDuration(int bit)
+    private ShipmentDuration(int bit)
     {
-        this.bit = bit; // 0000 1000
+        this.bit = bit;
     }
     
-    public ShipmentDuration(Shipments... args) { // (ShipmentDuration)
-        // not done yet
+    public ShipmentDuration(ShipmentDuration... args) {
+        
+        for (ShipmentDuration sd : args) {
+            this.bit = this.bit | sd.bit;    
+        }
     }
     
     public boolean isDuration(ShipmentDuration reference) {
-        // not done yet
+        if ((this.bit & (1 << (reference.bit - 1))) >= 0) {
+            return true;
+        }
         return false;
     }
 }
