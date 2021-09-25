@@ -6,4 +6,6 @@ comment1.target=Product(int,\ int,\ java.lang.String,\ int,\ boolean,\ PriceTag,
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Product\r\n
 comment2.params=id\ store\ name\ weight\ conditionUsed\ pricetag\ category
 comment2.target=Product(int,\ Store,\ java.lang.String,\ int,\ boolean,\ PriceTag,\ ProductCategory)
-numComments=3
+comment3.params=content
+comment3.target=boolean\ read(java.lang.String)
+numComments=4
