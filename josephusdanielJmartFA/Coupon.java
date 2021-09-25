@@ -1,6 +1,6 @@
 package josephusdanielJmartFA;
 
-public class Coupon extends Recognizeable
+public class Coupon extends Recognizeable implements FileParser
 {
     // instance variables - replace the example below with your own
     public final String name;
@@ -39,5 +39,10 @@ public class Coupon extends Recognizeable
             return pricetag.getAdjustedPrice() - (pricetag.getAdjustedPrice() * (this.cut/100));
         }
         return pricetag.getAdjustedPrice() - this.cut;
+    }
+    
+    @Override
+    public boolean read(String content) {
+        return false;
     }
 }

@@ -7,7 +7,7 @@ package josephusdanielJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Product extends Recognizeable
+public class Product extends Recognizeable implements FileParser
 {
     // instance variables - replace the example below with your own
     public String name;
@@ -42,5 +42,10 @@ public class Product extends Recognizeable
         this.pricetag = pricetag;
         this.category = category;
         this.rating = new ProductRating();
+    }
+    
+    @Override
+    public boolean read(String content) {
+        return false;
     }
 }
