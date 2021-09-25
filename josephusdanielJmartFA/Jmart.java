@@ -11,6 +11,8 @@ public class Jmart
 {
     // instance variables - replace the example below with your own
     public static void main(String[] args) {
+        ShipmentDuration sd = createShipmentDuration();
+        System.out.println(sd.isDuration(ShipmentDuration.KARGO));
     }
     
     public static Product createProduct() {
@@ -23,6 +25,6 @@ public class Jmart
     }
     
     public static ShipmentDuration createShipmentDuration() {
-        return new ShipmentDuration(ShipmentDuration.KARGO);
+        return new ShipmentDuration(ShipmentDuration.INSTANT);
     }  
  }

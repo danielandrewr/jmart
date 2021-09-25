@@ -7,30 +7,40 @@ package josephusdanielJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Product
+public class Product extends Recognizeable
 {
     // instance variables - replace the example below with your own
-    private int idCounter = 0;
-    public int id;
     public String name;
     public int weight;
     public boolean conditionUsed;
     public PriceTag pricetag;
     public ProductCategory category;
     public ProductRating rating;
+    public int storeId;
 
     /**
      * Constructor for objects of class Product
      */
-    public Product(String name, int weight, boolean conditionUsed, PriceTag pricetag, ProductCategory category)
+    public Product(int id, int storeId, String name, int weight, boolean conditionUsed, PriceTag pricetag, ProductCategory category)
     {
+        super(id);
         this.name = name;
         this.weight = weight;
         this.conditionUsed = conditionUsed;
         this.pricetag = pricetag;
         this.category = category;
         this.rating = new ProductRating();
-        this.id = this.idCounter;
-        this.idCounter++;
+        this.storeId = storeId;
+    }
+    
+    public Product(int id, Store store, String name, int weight, boolean conditionUsed, PriceTag pricetag, ProductCategory category) {
+        super(id);
+        this.storeId = store.id;
+        this.name = name;
+        this.weight = weight;
+        this.conditionUsed = conditionUsed;
+        this.pricetag = pricetag;
+        this.category = category;
+        this.rating = new ProductRating();
     }
 }

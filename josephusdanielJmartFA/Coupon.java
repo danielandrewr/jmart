@@ -1,6 +1,6 @@
 package josephusdanielJmartFA;
 
-public class Coupon
+public class Coupon extends Recognizeable
 {
     // instance variables - replace the example below with your own
     public final String name;
@@ -10,8 +10,9 @@ public class Coupon
     public final double minimum;
     private boolean used;
 
-    public Coupon(String name, int code, Type type, double cut, double minimum)
+    public Coupon(int id, String name, int code, Type type, double cut, double minimum)
     {
+        super(id);
         this.name = name;
         this.code = code;
         this.type = type;
