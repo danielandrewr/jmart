@@ -9,7 +9,6 @@ package josephusdanielJmartFA;
  */
 public interface FileParser
 {
-    
     public boolean read(String str);
     public default Object write() { return null; }
     public static Object newInstance(String str) { return null; }

@@ -1,11 +1,5 @@
 package josephusdanielJmartFA;
 
-/**
- * Write a description of class Product here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 public class Product extends Recognizeable implements FileParser
 {
     public String name;
@@ -36,6 +30,6 @@ public class Product extends Recognizeable implements FileParser
     }
     
     public String toString() {
-        return "Name: " + this.name + "\n" + "Weight: " + this.weight + "\n" + "conditionUsed: " + this.conditionUsed + "\n" + "priceTag: " + this.pricetag.getAdjustedPrice() + "\n" + "category: " + this.category + "\n" + "rating: " + this.rating + "\n" + "storeId: " + this.storeId;
+        return "Name: " + this.name + "\n" + "Weight: " + this.weight + "\n" + "conditionUsed: " + this.conditionUsed + "\n" + "priceTag: " + this.pricetag.getAdjustedPrice() + "\n" + "category: " + this.category + "\n" + "rating: " + this.rating + "\n" + "storeId: " + this.storeId + "\n";
     }
 }
