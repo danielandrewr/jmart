@@ -1,6 +1,6 @@
 package josephusdanielJmartFA;
 
-public class Coupon extends Recognizeable implements FileParser
+public class Coupon extends Recognizable implements FileParser
 {
     // instance variables - replace the example below with your own
     public final String name;

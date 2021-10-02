@@ -7,7 +7,7 @@ package josephusdanielJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Account extends Recognizeable implements FileParser
+public class Account extends Recognizable implements FileParser
 {
     public String name;
     public String email;

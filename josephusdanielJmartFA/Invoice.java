@@ -2,7 +2,7 @@ package josephusdanielJmartFA;
 
 import java.util.Date;
 
-public abstract class Invoice extends Recognizeable implements FileParser
+public abstract class Invoice extends Recognizable implements FileParser
 {
     enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED };
     enum Rating { NONE, BAD, NEUTRAL, GOOD };

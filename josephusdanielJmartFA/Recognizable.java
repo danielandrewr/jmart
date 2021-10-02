@@ -7,16 +7,16 @@ package josephusdanielJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Recognizeable
+public class Recognizable
 {
     // instance variables - replace the example below with your own
     public final int id;
     
-    protected Recognizeable(int id) {
+    protected Recognizable(int id) {
         this.id = id;
     }
     
-    public boolean equals(Recognizeable recognizeable) {
+    public boolean equals(Recognizable recognizeable) {
         if (this.id == recognizeable.id) {
             return true;
         }
@@ -25,8 +25,8 @@ public class Recognizeable
     }
     
     public boolean equals(Object obj) {
-        if (obj instanceof Recognizeable) {
-            Recognizeable recog = (Recognizeable) obj;
+        if (obj instanceof Recognizable) {
+            Recognizable recog = (Recognizable) obj;
             if (recog.id == this.id) {
                 return true;
             }
