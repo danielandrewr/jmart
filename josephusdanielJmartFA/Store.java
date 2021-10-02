@@ -1,14 +1,12 @@
 package josephusdanielJmartFA;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-/**
- * Write a description of class Store here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 public class Store extends Recognizeable implements FileParser
 {
+    public static final String REGEX_PHONE = "(^[0-9]{9,12}$)";
+    public static final String REGEX_NAME = "(^[A-Z][a-z0-9][\\S\\s]{4,20}$)";
     public String name;
     public String address;
     public String phoneNumber;
@@ -34,5 +32,16 @@ public class Store extends Recognizeable implements FileParser
     
     public String toString() {
         return "name: " + this.name + "\n" + "address: " + this.address + "\n" + "phoneNumber: " + this.phoneNumber + "\n";
+    }
+    
+    public boolean validate() {
+        Pattern p = Pattern.compile(REGEX_NAME);
+        Pattern p1 = Pattern.compile(REGEX_PHONE);
+        Matcher m1 = p.matcher(this.name);
+        Matcher m2 = p.matcher(this.phoneNumber);
+        if (m1.find() == true && m2.find() == true) {
+            return true;
+        }
+        return false;
     }
 }

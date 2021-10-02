@@ -1,5 +1,9 @@
 package josephusdanielJmartFA;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 public class Shipment implements FileParser {
     public String address;
     public int shipmentCost;
@@ -24,7 +28,7 @@ public class Shipment implements FileParser {
         public MultiDuration(Duration... args) {
         
             for (Duration md : args) {
-                this.bit = (byte) (this.bit | md.bit);    
+                this.bit = (byte) (this.bit | md.bit);  
             }
         }
         
@@ -36,8 +40,11 @@ public class Shipment implements FileParser {
         }
     }
 
-    static class Duration {      
-        // instance variables
+    static class Duration {
+    
+        Calendar cal = Calendar.getInstance();
+        
+        public static final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("EEE MMMM dd yyyy");
         public static final Duration INSTANT = new Duration((byte)00000001);
         public static final Duration SAME_DAY = new Duration((byte)00000010);
         public static final Duration NEXT_DAY = new Duration((byte)00000100);
@@ -49,7 +56,27 @@ public class Shipment implements FileParser {
         private Duration(byte bit)
         {
             this.bit = bit;
+            
         }
+        
+        public String getEstimatedArrival(Date reference) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(reference);
+            
+            if (this.bit == ((byte)00000001) || this.bit == ((byte)00000010)) {
+                return ESTIMATION_FORMAT.format(cal.getTime());
+            } else if (this.bit == ((byte)00000100)) {
+                cal.add(Calendar.DATE, 1);
+                return ESTIMATION_FORMAT.format(cal.getTime());
+            } else if (this.bit == ((byte)00001000)) {
+                cal.add(Calendar.DATE, 2);
+                return ESTIMATION_FORMAT.format(cal.getTime());
+            } else {
+                cal.add(Calendar.DATE, 5);
+                return ESTIMATION_FORMAT.format(cal.getTime());
+            }
+        }
+        
     }
 }
 

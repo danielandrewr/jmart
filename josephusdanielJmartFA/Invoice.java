@@ -1,11 +1,13 @@
 package josephusdanielJmartFA;
 
+import java.util.Date;
+
 public abstract class Invoice extends Recognizeable implements FileParser
 {
     enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED };
     enum Rating { NONE, BAD, NEUTRAL, GOOD };
     
-    public String date = "27-09-2021";
+    public Date date;
     public int buyerId;
     public int productId;
     public int complaintId;
@@ -16,6 +18,7 @@ public abstract class Invoice extends Recognizeable implements FileParser
         super(id);
         this.buyerId = buyerId;
         this.productId = productId;
+        this.date = new Date(); 
     }
     
     public abstract double getTotalPay();
