@@ -1,6 +1,7 @@
 package josephusdanielJmartFA;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public abstract class Invoice extends Recognizable implements FileParser
 {
@@ -11,14 +12,17 @@ public abstract class Invoice extends Recognizable implements FileParser
     public int buyerId;
     public int productId;
     public int complaintId;
-    public Rating rating = Rating.NONE;
-    public Status status = Status.WAITING_CONFIRMATION;
+    public Rating rating;
+    public Status status;
+    public ArrayList<Record> history = new ArrayList<>();
     
     protected Invoice(int id, int buyerId, int productId) {
         super(id);
         this.buyerId = buyerId;
         this.productId = productId;
         this.date = new Date(); 
+        this.rating = Rating.NONE;
+        this.status = Status.WAITING_CONFIRMATION;
     }
     
     public abstract double getTotalPay();
@@ -26,5 +30,11 @@ public abstract class Invoice extends Recognizable implements FileParser
     @Override
     public boolean read(String content) {
         return false;
+    }
+    
+    class Record {
+        public Status status;
+        public Date date;
+        public String message;
     }
 }

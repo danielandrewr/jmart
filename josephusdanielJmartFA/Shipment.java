@@ -41,8 +41,6 @@ public class Shipment implements FileParser {
     }
 
     static class Duration {
-    
-        Calendar cal = Calendar.getInstance();
         
         public static final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("EEE MMMM dd yyyy");
         public static final Duration INSTANT = new Duration((byte)00000001);
@@ -56,7 +54,6 @@ public class Shipment implements FileParser {
         private Duration(byte bit)
         {
             this.bit = bit;
-            
         }
         
         public String getEstimatedArrival(Date reference) {
@@ -71,9 +68,11 @@ public class Shipment implements FileParser {
             } else if (this.bit == ((byte)00001000)) {
                 cal.add(Calendar.DATE, 2);
                 return ESTIMATION_FORMAT.format(cal.getTime());
-            } else {
+            } else if (this.bit == ((byte)00010000)) {
                 cal.add(Calendar.DATE, 5);
                 return ESTIMATION_FORMAT.format(cal.getTime());
+            } else {
+                return null;
             }
         }
         
