@@ -74,7 +74,7 @@ public class Algorithm {
 	public static <T> boolean exists(Iterator<T> iterator, Predicate<T> predicate) {
 		T required = iterator.next();
 		while (iterator.hasNext()) {
-			if (predicate.equals(required)) {
+			if (predicate.predicate(required)) {
 				return true;
 			}
 		}
