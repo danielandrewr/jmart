@@ -7,13 +7,27 @@ package josephusdanielJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Recognizable
+public class Recognizable implements Comparable<Recognizable>
 {
     // instance variables - replace the example below with your own
     public final int id;
     
     protected Recognizable(int id) {
         this.id = id;
+    }
+    
+    public static <T extends Recognizable> int setClosingId(Class<T> clasz, int i) {
+//    	if (clasz.getSuperclass() == Recognizable.class) {
+//    		return 0;
+//    	}
+		return 0;
+    }
+    
+    public static <T extends Recognizable> int getClosingId(Class<T> clasz) {
+//    	if (clasz.getSuperclass() == Recognizable.class) {
+//    		return 0;
+//    	}
+		return 0;
     }
     
     public boolean equals(Recognizable recognizeable) {
@@ -33,4 +47,9 @@ public class Recognizable
         }
         return false;
     }
+
+	@Override
+	public int compareTo(Recognizable o) {
+		return this.id / o.id;
+	}
 }
