@@ -50,6 +50,6 @@ public class Recognizable implements Comparable<Recognizable>
 
 	@Override
 	public int compareTo(Recognizable o) {
-		return this.id / o.id;
+		return Integer.compare(this.id, o.id);
 	}
 }

@@ -44,33 +44,40 @@ public class Algorithm {
 		return res;
 	}
 	
-	public <T> boolean exists(T[] array, T value) {
-		
-		return false;
+	public static <T> boolean exists(T[] array, T value) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		Predicate<T> predicate = value::equals;
+		return exists(iterator, predicate);
 	}
 	
-	public <T> boolean exists(Iterable<T> iterable, T value) {
-		
-		return false;
+	public static <T> boolean exists(Iterable<T> iterable, T value) {
+		Iterator<T> iterator = iterable.iterator();
+		Predicate<T> predicate = value::equals;
+		return exists(iterator, predicate);
 	}
 	
-	public <T> boolean exists(Iterator<T> iterator, T value) {
-		
-		return false;
+	public static <T> boolean exists(Iterator<T> iterator, T value) {
+		Predicate<T> predicate = value::equals;
+		return exists(iterator, predicate);
 	}
 
-	public <T> boolean exists(T[] array, Predicate<T> predicate) {
-		
-		return false;
+	public static <T> boolean exists(T[] array, Predicate<T> predicate) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return exists(iterator, predicate);
 	}
 
-	public <T> boolean exists(Iterable<T> iterable, Predicate<T> predicate) {
-	
-		return false;
+	public static <T> boolean exists(Iterable<T> iterable, Predicate<T> predicate) {
+		Iterator<T> iterator = iterable.iterator();
+		return exists(iterator, predicate);
 	}
 	
-	public <T> boolean exists(Iterator<T> iterator, Predicate<T> predicate) {
-		
+	public static <T> boolean exists(Iterator<T> iterator, Predicate<T> predicate) {
+		T required = iterator.next();
+		while (iterator.hasNext()) {
+			if (predicate.equals(required)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -110,5 +117,21 @@ public class Algorithm {
 			}
 		}
 		return null;
+	}
+	
+	public static <T extends Comparable<? super T>> T max(T first, T second) {
+		T max = first;
+		if (second.compareTo(max) > 0) {
+			max = second;
+		}
+		return max;
+	}
+	
+	public static <T extends Comparable<? super T>> T min(T first, T second) {
+		T min = first;
+		if (second.compareTo(min) < 0) {
+			min = second;
+		}
+		return min;
 	}
 }
