@@ -154,10 +154,10 @@ public class Algorithm {
 	
 	public static <T extends Comparable<? super T>> T max(T[] array) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
-		T next = iterator.next();
 		T max = iterator.next();
 		while(iterator.hasNext()) {
-			if (max.compareTo(next) > 0) {
+			T next = iterator.next();
+			if (next.compareTo(max) > 0) {
 				max = next;
 			}
 		}
@@ -170,10 +170,10 @@ public class Algorithm {
 	}
 	
 	public static <T extends Comparable<? super T>> T max(Iterator<T> iterator) {
-		T next = iterator.next();
 		T max = iterator.next();
 		while(iterator.hasNext()) {
-			if (max.compareTo(next) > 0) {
+			T next = iterator.next();
+			if (next.compareTo(max) > 0) {
 				max = next;
 			}
 		}
@@ -186,9 +186,9 @@ public class Algorithm {
 	}
 	
 	public static <T extends Comparable<? super T>> T max(Iterator<T> iterator, Comparator<? super T> comparator) {
-		T next = iterator.next();
 		T max = iterator.next();
 		while(iterator.hasNext()) {
+			T next = iterator.next();
 			if (comparator.compare(max, next) > 0) {
 				max = next;
 			}
@@ -198,10 +198,10 @@ public class Algorithm {
 	
 	public static <T extends Comparable<? super T>> T min(T[] array) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
-		T next = iterator.next();
 		T min = iterator.next();
 		while(iterator.hasNext()) {
-			if (min.compareTo(next) > 0) {
+			T next = iterator.next();
+			if (next.compareTo(min) < 0) {
 				min = next;
 			}
 		}
@@ -219,10 +219,10 @@ public class Algorithm {
 	}
 	
 	public static <T extends Comparable<? super T>> T min(Iterator<T> iterator) {
-		T next = iterator.next();
 		T min = iterator.next();
 		while(iterator.hasNext()) {
-			if (min.compareTo(next) > 0) {
+			T next = iterator.next();
+			if (next.compareTo(min) < 0) {
 				min = next;
 			}
 		}
@@ -235,9 +235,9 @@ public class Algorithm {
 	}
 	
 	public static <T extends Comparable<? super T>> T min(Iterator<T> iterator, Comparator<? super T> comparator) {
-		T next = iterator.next();
 		T min = iterator.next();
 		while (iterator.hasNext()) {
+			T next = iterator.next();
 			if (comparator.compare(min, next) < 0) {
 				min = next;
 			}

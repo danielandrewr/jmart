@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 public class Shipment {
 	
     static class Plan {
-    	public byte bit;
+    	public final byte bit;
     	
     	private Plan(byte bit) {
     		this.bit = bit;
