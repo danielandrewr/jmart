@@ -12,8 +12,8 @@ public class Recognizable implements Comparable<Recognizable>
     // instance variables - replace the example below with your own
     public final int id;
     
-    protected Recognizable(int id) {
-        this.id = id;
+    protected Recognizable() {
+        this.id = 5;
     }
     
     public static <T extends Recognizable> int setClosingId(Class<T> clasz, int i) {

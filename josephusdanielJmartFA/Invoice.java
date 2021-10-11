@@ -3,7 +3,7 @@ package josephusdanielJmartFA;
 import java.util.Date;
 import java.util.ArrayList;
 
-public abstract class Invoice extends Recognizable implements FileParser
+public abstract class Invoice extends Recognizable
 {
     enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED };
     enum Rating { NONE, BAD, NEUTRAL, GOOD };
@@ -16,8 +16,7 @@ public abstract class Invoice extends Recognizable implements FileParser
     public Status status;
     public ArrayList<Record> history = new ArrayList<>();
     
-    protected Invoice(int id, int buyerId, int productId) {
-        super(id);
+    protected Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
         this.productId = productId;
         this.date = new Date(); 
@@ -27,10 +26,10 @@ public abstract class Invoice extends Recognizable implements FileParser
     
     public abstract double getTotalPay();
     
-    @Override
-    public boolean read(String content) {
-        return false;
-    }
+//    @Override
+//    public boolean read(String content) {
+//        return false;
+//    }
     
     class Record {
         public Status status;
