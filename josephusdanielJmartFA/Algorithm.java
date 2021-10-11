@@ -253,7 +253,7 @@ public class Algorithm {
 		return max;
 	}
 	
-	public static<T extends Comparable<? super T>> T max(T first, T second, Comparator<? super T> comparator) {
+	public static <T extends Comparable<? super T>> T max(T first, T second, Comparator<? super T> comparator) {
 		T max = first;
 		if (comparator.compare(second, first) > 0) {
 			max = second;
@@ -274,7 +274,7 @@ public class Algorithm {
 		return min;
 	}
 	
-	public static<T extends Comparable<? super T>> T min(T first, T second, Comparator<? super T> comparator) {
+	public static <T extends Comparable<? super T>> T min(T first, T second, Comparator<? super T> comparator) {
 		T min = first;
 		if (comparator.compare(second, first) < 0) {
 			min = second;
