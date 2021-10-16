@@ -24,6 +24,6 @@ public class Product extends Recognizable
     }
     
     public String toString() {
-        return "Name: " + this.name + "\n" + "Weight: " + this.weight + "\n" + "conditionUsed: " + this.conditionUsed + "\n" + "priceTag: " + this.pricetag.getAdjustedPrice() + "\n" + "category: " + this.category + "\n" + "rating: " + this.rating + "\n" + "accountId: " + this.accountId + "\n";
+        return "Name: " + this.name + "\n" + "Weight: " + this.weight + "\n" + "conditionUsed: " + this.conditionUsed + "\n" + "priceTag: " + Treasury.getAdjustedPrice() + "\n" + "category: " + this.category + "\n" + "rating: " + this.rating + "\n" + "accountId: " + this.accountId + "\n";
     }
 }
