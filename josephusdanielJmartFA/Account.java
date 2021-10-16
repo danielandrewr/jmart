@@ -17,11 +17,6 @@ public class Account extends Recognizable
        this.password = password;
        
    }
-
-//   @Override
-//   public boolean read(String content) {
-//       return false;
-//   }
    
    public String toString() {
         return "name: " + this.name + "\n" + "email: " + this.email + "\n" + "password: " + this.password;

@@ -1,24 +1,24 @@
 package josephusdanielJmartFA;
 
 public class Treasury {
-    private double price;
-    private double discount;
+    private static double price;
+    private static double discount;
     public static final double COMMISSION_MULTIPLIER = 0.05;
     public static final double BOTTOM_FEE = 1000.0;
     public static final double BOTTOM_PRICE = 20000.0;
 
-    public Treasury(double price) 
+    public Treasury(double priceE) 
     {
-        this.price = price;
-        this.discount = 0.0;
+        price = priceE;
+        discount = 0.0;
     }
     
-    public Treasury(double price, double discount) {
-        this.price = price;
-        this.discount = discount;
+    public Treasury(double priceE, double discountE) {
+        price = priceE;
+        discount = discountE;
     }
     
-    public double getAdminFee() {
+    public static double getAdminFee() {
         double hargaDiskon = getDiscountedPrice();
         
         if (hargaDiskon < BOTTOM_PRICE) {
@@ -28,18 +28,17 @@ public class Treasury {
         return (hargaDiskon * COMMISSION_MULTIPLIER);
     }
     
-    private double getDiscountedPrice() {
-        double discount = this.discount;
-        if (this.discount > 100.0) {
+    public static double getDiscountedPrice() {
+        if (discount > 100.0) {
             return 0.0;
-        } else if (this.discount == 100.0) {
-            return this.price;
+        } else if (discount == 100.0) {
+            return price;
         }
         
-        return this.price - (this.price * (discount/100));
+        return price - (price * (discount/100));
     }
     
-    public double getAdjustedPrice() {
+    public static double getAdjustedPrice() {
         return getDiscountedPrice() + getAdminFee();
     }
 }
