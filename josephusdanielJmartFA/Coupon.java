@@ -26,7 +26,7 @@ public class Coupon extends Recognizable
     
     public boolean canApply(Treasury pricetag) {
         
-        if ((used == false) && (pricetag.getAdjustedPrice() >= this.minimum)) {
+        if ((used == false) && (Treasury.getAdjustedPrice() >= this.minimum)) {
             return true;
         }
         return false;
@@ -35,9 +35,9 @@ public class Coupon extends Recognizable
     public double apply(Treasury pricetag) {
         this.used = true;
         if (this.type == Type.DISCOUNT) {
-            return pricetag.getAdjustedPrice() - (pricetag.getAdjustedPrice() * (this.cut/100));
+            return Treasury.getAdjustedPrice() - (Treasury.getAdjustedPrice() * (this.cut/100));
         }
-        return pricetag.getAdjustedPrice() - this.cut;
+        return Treasury.getAdjustedPrice() - this.cut;
     }
     
 //    @Override
