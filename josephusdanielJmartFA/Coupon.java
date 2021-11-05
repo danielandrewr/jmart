@@ -26,18 +26,19 @@ public class Coupon extends Recognizable
     
     public boolean canApply(Treasury pricetag) {
         
-        if ((used == false) && (Treasury.getAdjustedPrice() >= this.minimum)) {
+        if ((used == false) && (Treasury.getAdjustedPrice(10000, 0.5) >= this.minimum)) {
             return true;
         }
         return false;
     }
     
-    public double apply(Treasury pricetag) {
+    @SuppressWarnings("static-access")
+	public double apply(Treasury pricetag) {
         this.used = true;
         if (this.type == Type.DISCOUNT) {
-            return Treasury.getAdjustedPrice() - (Treasury.getAdjustedPrice() * (this.cut/100));
+            return pricetag.getAdjustedPrice(10000, 10) - (pricetag.getAdjustedPrice(10000, 10) * (this.cut / 100));
         }
-        return Treasury.getAdjustedPrice() - this.cut;
+        return pricetag.getAdjustedPrice(10000, 10) - this.cut;
     }
     
 //    @Override
