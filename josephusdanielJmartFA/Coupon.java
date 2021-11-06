@@ -1,6 +1,6 @@
 package josephusdanielJmartFA;
 
-public class Coupon extends Recognizable
+public class Coupon extends Serializable
 {
     // instance variables - replace the example below with your own
     public final String name;
@@ -33,12 +33,12 @@ public class Coupon extends Recognizable
     }
     
     @SuppressWarnings("static-access")
-	public double apply(Treasury pricetag) {
+	public double apply(double price, double discount) {
         this.used = true;
         if (this.type == Type.DISCOUNT) {
-            return pricetag.getAdjustedPrice(10000, 10) - (pricetag.getAdjustedPrice(10000, 10) * (this.cut / 100));
+            return Treasury.getAdjustedPrice(price, discount) - (Treasury.getAdjustedPrice(price, discount) * (this.cut / 100));
         }
-        return pricetag.getAdjustedPrice(10000, 10) - this.cut;
+        return Treasury.getAdjustedPrice(price, discount) - this.cut;
     }
     
 //    @Override

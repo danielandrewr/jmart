@@ -3,7 +3,7 @@ package josephusdanielJmartFA;
 import java.util.Date;
 import java.util.ArrayList;
 
-public abstract class Invoice extends Recognizable
+public abstract class Invoice extends Serializable
 {
     enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED };
     enum Rating { NONE, BAD, NEUTRAL, GOOD };
