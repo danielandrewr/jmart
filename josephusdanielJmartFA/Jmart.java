@@ -43,7 +43,7 @@ public class Jmart {
     	
     	try {
     		List<Product> list = read("C:/Users/Daniel/Documents/Daniel/Semester 3/OOP/Praktikum/Modul 1/jmart/assets/randomProductList.json");
-    		List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
+    		List<Product> filtered = filterByPrice(list, 0.0, 30000.0);
     		filtered.forEach(product -> System.out.println(product.price));
     	} catch (Throwable t) {
     		t.printStackTrace();
@@ -68,14 +68,12 @@ public class Jmart {
     public static List<Product> filterByPrice(List<Product> product, double min, double max) {
     	List<Product> filtered = new ArrayList<Product>();
     	
-    	for (Product prod : product) {
-    		if (min == 0.0 && prod.price < min) {
-    			continue;
-    		}
-    		if (max == 0.0 && prod.price > max) {
-				continue;
-			}
-    		filtered.add(prod);
+    	if (min == 0.0) {
+    		filtered = Algorithm.<Product>collect(product, (e) -> e.price <= max);
+    	} else if (max == 0.0) {
+    		filtered = Algorithm.<Product>collect(product, (e) -> e.price >= min);
+    	} else {
+    		filtered = Algorithm.<Product>collect(product, (e) -> e.price >= min && e.price <= max);
     	}
     	return filtered;
     }

@@ -16,9 +16,8 @@ public class Algorithm {
 	}
 	
 	public static <T> List<T> collect(Iterable<T> iterable, T value) {
-		Iterator<T> iterator = iterable.iterator();
 		Predicate<T> predicate = value::equals;
-		return collect(iterator, predicate);
+		return collect(iterable, predicate);
 	}
 	
 	public static <T> List<T> collect(T[] array, Predicate<T> predicate) {
