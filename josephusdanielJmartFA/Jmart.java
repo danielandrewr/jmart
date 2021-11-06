@@ -69,10 +69,10 @@ public class Jmart {
     	List<Product> filtered = new ArrayList<Product>();
     	
     	for (Product prod : product) {
-    		if (min <= 0.0 && prod.price < min) {
+    		if (min == 0.0 && prod.price < min) {
     			continue;
     		}
-    		if (max <= 0.0 && prod.price > max) {
+    		if (max == 0.0 && prod.price > max) {
 				continue;
 			}
     		filtered.add(prod);
