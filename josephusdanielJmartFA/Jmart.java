@@ -101,24 +101,14 @@ public class Jmart {
     }
     
     public static List<Product> filterByName(List<Product> list, String search, int page, int pageSize) {
-    	List<Product> filtered = new ArrayList<>();
-    	
-    	for (Product product : list) {
-    		if (product.name.toLowerCase().contains(search.toLowerCase())) {
-    			filtered.add(product);
-    		}
-    	}
+    	List<Product> filtered = Algorithm.<Product>collect(list, (e) -> e.name.toLowerCase().contains(search.toLowerCase()));
     	return paginate(filtered, page, pageSize, (e) -> e.name.toLowerCase().contains(search.toLowerCase()));
     }
     
 	public static List<Product> filterByAccountId(List<Product> list, int accountId, int page, int pageSize) {
-    	List<Product> filtered = new ArrayList<>();
+    	List<Product> filtered = Algorithm.<Product>collect(list, (e) -> e.accountId == accountId);
     	
-    	for (Product product : list) {
-    		if (product.accountId == accountId) {
-    			filtered.add(product);
-    		}
-    	}
+    	
     	
     	return paginate(filtered, page, pageSize, (e) -> e.accountId == accountId);
     }
