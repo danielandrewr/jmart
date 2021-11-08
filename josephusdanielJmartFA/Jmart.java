@@ -44,7 +44,7 @@ public class Jmart {
     	try {
     		List<Product> list = read("C:/Users/Daniel/Documents/Daniel/Semester 3/OOP/Praktikum/Modul 1/jmart/assets/randomProductList.json");
     		List<Product> filtered = filterByName(list, "gtx", 1, 5);
-    		//List<Product> filtered = filterByAccountId(list, 10, 1, 5);
+    		//List<Product> filtered = filterByAccountId(list, 1, 0, 5);
     		filtered.forEach(product -> System.out.println(filtered));
     	} catch (Throwable t) {
     		t.printStackTrace();
@@ -80,36 +80,35 @@ public class Jmart {
     }
     
     private static List<Product> paginate(List<Product> list, int page, int pageSize, Predicate<Product> pred) {
-    	if (page <= 0 || pageSize <= 0) {
-    		throw new IllegalArgumentException("Invalid Input!");
-    	}
-    	
-    	List<Product> paginated = new ArrayList<>();
-    	
-    	for (Product product : list) {
-    		if (pred.predicate(product) == true) {
-    			paginated.add(product);
-    		}
-    	}
-    	
-    	int index = (page - 1) * pageSize;
-    	if (paginated == null || paginated.size() <= index) {
-    		return Collections.emptyList();
-    	}
-    	
-    	int floorPage = Math.min(index + pageSize, paginated.size());
-    	return paginated.subList(index, floorPage);
+        if (page < 0 || pageSize < 0) {
+            throw new IllegalArgumentException("Invalid Input!");
+        }
+        
+        List<Product> paginated = new ArrayList<>();
+        
+        for (Product product : list) {
+            if (pred.predicate(product) == true) {
+                paginated.add(product);
+            }
+        }
+        
+        int index = (page + 1) * pageSize;
+        if (paginated == null || paginated.size() <= index) {
+            return Collections.emptyList();
+        }
+        int floorPage = Math.min(index + pageSize, paginated.size());
+        return paginated.subList(index, floorPage);
     }
     
     public static List<Product> filterByName(List<Product> list, String search, int page, int pageSize) {
     	List<Product> filtered = new ArrayList<>();
     	
     	for (Product product : list) {
-    		if (product.name.toLowerCase() == search.toLowerCase()) {
+    		if (product.name.toLowerCase().contains(search.toLowerCase())) {
     			filtered.add(product);
     		}
     	}
-    	return paginate(filtered, page, pageSize, (e) -> e.name.toLowerCase() == search.toLowerCase());
+    	return paginate(filtered, page, pageSize, (e) -> e.name.toLowerCase().contains(search.toLowerCase()));
     }
     
 	public static List<Product> filterByAccountId(List<Product> list, int accountId, int page, int pageSize) {
