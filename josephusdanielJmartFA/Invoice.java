@@ -1,7 +1,6 @@
 package josephusdanielJmartFA;
 
 import java.util.Date;
-import java.util.ArrayList;
 
 public abstract class Invoice extends Serializable
 {
@@ -13,7 +12,6 @@ public abstract class Invoice extends Serializable
     public int productId;
     public int complaintId;
     public Rating rating;
-    public ArrayList<Record> history = new ArrayList<>();
     
     protected Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
@@ -24,15 +22,4 @@ public abstract class Invoice extends Serializable
     }
     
     public abstract double getTotalPay(Product product);
-    
-//    @Override
-//    public boolean read(String content) {
-//        return false;
-//    }
-    
-    class Record {
-        public Status status;
-        public Date date;
-        public String message;
-    }
 }
