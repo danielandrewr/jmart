@@ -59,24 +59,19 @@ public class Jmart {
     }
     
     private static List<Product> paginate(List<Product> list, int page, int pageSize, Predicate<Product> pred) {
-        if (page < 0 || pageSize < 0) {
-            throw new IllegalArgumentException("Invalid Input!");
-        }
-        
-        List<Product> paginated = new ArrayList<>();
-        
-        for (Product product : list) {
-            if (pred.predicate(product) == true) {
-                paginated.add(product);
-            }
-        }
-        
-        int index = (page + 1) * pageSize;
-        if (paginated == null || paginated.size() <= index) {
-            return Collections.emptyList();
-        }
-        int floorPage = Math.min(index + pageSize, paginated.size());
-        return paginated.subList(index, floorPage);
+       List<Product> paginated = new ArrayList<>();
+       int index = 0;
+       int startingPage = page * pageSize;
+       int lastPage = startingPage + pageSize;
+       
+       for (Product prod : list) {
+    	   if (index >= startingPage && index < lastPage && (pred.predicate(prod) == true)) {
+    		   paginated.add(prod);
+    	   }
+    	   index++;
+       }
+       
+       return paginated;
     }
     
     public static List<Product> filterByName(List<Product> list, String search, int page, int pageSize) {

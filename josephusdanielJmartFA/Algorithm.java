@@ -297,8 +297,8 @@ public class Algorithm {
 		int startingPage = page * pageSize;
 		int lastPage = startingPage + pageSize;
 		
-		T next = iterator.next();
 		while(iterator.hasNext()) {
+			T next = iterator.next();
 			if (index >= startingPage && index < lastPage && pred.predicate(next)) {
 				paginated.add(next);
 			}

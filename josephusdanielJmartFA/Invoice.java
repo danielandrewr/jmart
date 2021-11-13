@@ -13,18 +13,17 @@ public abstract class Invoice extends Serializable
     public int productId;
     public int complaintId;
     public Rating rating;
-    public Status status;
     public ArrayList<Record> history = new ArrayList<>();
     
     protected Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
         this.productId = productId;
-        this.date = new Date(); 
+        this.date = java.util.Calendar.getInstance().getTime();
         this.rating = Rating.NONE;
-        this.status = Status.WAITING_CONFIRMATION;
+        this.complaintId = -1;
     }
     
-    public abstract double getTotalPay();
+    public abstract double getTotalPay(Product product);
     
 //    @Override
 //    public boolean read(String content) {
