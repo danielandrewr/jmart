@@ -41,14 +41,14 @@ public class JsonTable<T> extends Vector<T> {
 	
 	public static <T> T readJson(Class<T> clasz, String filepath) throws FileNotFoundException {
 		JsonReader jr = new JsonReader(new FileReader(filepath));
-		T[] classs = gson.fromJson(jr, clasz);
+		return gson.fromJson(jr, clasz);
 		
-		return clasz.cast(classs);
 	}
 	
 	public static void writeJson(Object object, String filepath) throws IOException {
 		FileWriter writer = new FileWriter(filepath);
-		gson.toJson(object, writer);
+		writer.write(gson.toJson(object));
+		writer.close();
 	}
 	
 	public void writeJson() throws IOException {
