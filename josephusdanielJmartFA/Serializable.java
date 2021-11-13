@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Serializable implements Comparable<Serializable>
 {
-    // instance variables - replace the example below with your own
+	
     public final int id;
     private static Map<Class<?>, Integer> mapCounter = new HashMap<Class<?>, Integer>();
     

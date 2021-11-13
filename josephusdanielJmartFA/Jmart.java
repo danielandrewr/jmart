@@ -1,9 +1,7 @@
 package josephusdanielJmartFA;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,33 +17,14 @@ public class Jmart {
 	}
 	
     public static void main(String[] args) {
-    	String filePath = "C:/Users/Daniel/Documents/Daniel/Semester 3/OOP/Praktikum/Modul 1/jmart/assets/city.json";
-    	Gson gson = new Gson();
-    	
     	try {
-    		BufferedReader br = new BufferedReader(new FileReader(filePath));
-    		Country input = gson.fromJson(br, Country.class);
-    		System.out.println("name: " + input.name);
-    		System.out.println("population: " + input.population);
-    		System.out.println("states: ");
-    		input.listOfStates.forEach(state -> System.out.println(state));
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	
-    	System.out.println("account id: " + new Account(null ,null, null, -1).id);
-    	System.out.println("account id: " + new Account(null ,null, null, -1).id);
-    	System.out.println("account id: " + new Account(null ,null, null, -1).id);
-    	
-    	System.out.println("payment id: " + new Payment(-1, -1, -1, null).id);
-    	System.out.println("payment id: " + new Payment(-1, -1, -1, null).id);
-    	System.out.println("payment id: " + new Payment(-1, -1, -1, null).id);
-    	
-    	try {
-    		List<Product> list = read("C:/Users/Daniel/Documents/Daniel/Semester 3/OOP/Praktikum/Modul 1/jmart/assets/randomProductList.json");
-    		List<Product> filtered = filterByName(list, "gtx", 1, 5);
-    		//List<Product> filtered = filterByAccountId(list, 1, 0, 5);
-    		filtered.forEach(product -> System.out.println(filtered));
+    		String filepath = "a/b/c/account.json";
+    		JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
+    		tableAccount.add(new Account("name", "email", "password", 0.0));
+    		tableAccount.writeJson();
+    		
+    		tableAccount = new JsonTable<>(Account.class, filepath);
+    		tableAccount.forEach(account -> System.out.println(account.toString()));
     	} catch (Throwable t) {
     		t.printStackTrace();
     	}
@@ -107,9 +86,6 @@ public class Jmart {
     
 	public static List<Product> filterByAccountId(List<Product> list, int accountId, int page, int pageSize) {
     	List<Product> filtered = Algorithm.<Product>collect(list, (e) -> e.accountId == accountId);
-    	
-    	
-    	
     	return paginate(filtered, page, pageSize, (e) -> e.accountId == accountId);
     }
 }

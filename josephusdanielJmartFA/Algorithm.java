@@ -280,4 +280,30 @@ public class Algorithm {
 		}
 		return min;
 	}
+	
+	public static <T> List<T> paginate(T[] array, int page, int pageSize, Predicate<T> pred) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return paginate(iterator, page, pageSize, pred);
+	}
+	
+	public static <T> List<T> paginate(Iterable<T> iterable, int page, int pageSize, Predicate<T> pred) {
+		Iterator<T> iterator = iterable.iterator();
+		return paginate(iterator, page, pageSize, pred);
+	}
+	
+	public static <T> List<T> paginate(Iterator<T> iterator, int page, int pageSize, Predicate<T> pred) {
+		List<T> paginated = new ArrayList<>();
+		int index = 0;
+		int startingPage = page * pageSize;
+		int lastPage = startingPage + pageSize;
+		
+		T next = iterator.next();
+		while(iterator.hasNext()) {
+			if (index >= startingPage && index < lastPage && pred.predicate(next)) {
+				paginated.add(next);
+			}
+			index++;
+		}
+		return paginated;
+	}
 }
