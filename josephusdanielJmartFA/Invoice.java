@@ -4,7 +4,7 @@ import java.util.Date;
 
 public abstract class Invoice extends Serializable
 {
-    enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED };
+    enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED, DELIVERED };
     enum Rating { NONE, BAD, NEUTRAL, GOOD };
     
     public Date date;

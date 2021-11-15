@@ -5,10 +5,19 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
+import josephusdanielJmartFA.Invoice.Status;
+import josephusdanielJmartFA.Payment.Record;
+
 public class Jmart {
+	
+	public static long DELIVERED_LIMIT_MS = 10;
+	public static long ON_DELIVERY_LIMIT_MS = 10;
+	public static long ON_PROGRESS_LIMIT_MS = 10;
+	public static long WAITING_CONF_LIMIT_MS = 10;
 	
 	class Country {
 		public String name;
@@ -18,16 +27,41 @@ public class Jmart {
 	
     public static void main(String[] args) {
     	try {
-    		String filepath = "a/b/c/account.json";
-    		JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
-    		tableAccount.add(new Account("name", "email", "password", 0.0));
-    		tableAccount.writeJson();
-    		
-    		tableAccount = new JsonTable<>(Account.class, filepath);
-    		tableAccount.forEach(account -> System.out.println(account.toString()));
+    		JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
+    		ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP", Jmart::paymentTimekeeper);
+    		paymentPool.start();
+    		table.forEach(payment -> paymentPool.add(payment));
+    		while (paymentPool.size() != 0);
+    		paymentPool.exit();
+    		while (paymentPool.isAlive());
+    		System.out.println("Thread exited successfully");
+    		Gson gson = new Gson();
+    		table.forEach(payment -> {
+    			String history = gson.toJson(payment.history);
+    			System.out.println(history);
+    		});
     	} catch (Throwable t) {
     		t.printStackTrace();
     	}
+    }
+    
+    public static boolean paymentTimekeeper(Payment payment) {
+    	long startTime = System.currentTimeMillis();
+    	for (Record record : payment.history) {
+    		
+    		long time_elapsed = System.currentTimeMillis() - startTime;
+    		
+    		if (record.status == Status.WAITING_CONFIRMATION && time_elapsed > WAITING_CONF_LIMIT_MS) {
+    			record.status = Invoice.Status.FAILED;
+    		} else if (record.status == Status.ON_PROGRESS && time_elapsed > ON_PROGRESS_LIMIT_MS) {
+    			record.status = Invoice.Status.FAILED;
+    		} else if (record.status == Status.ON_DELIVERY && time_elapsed > ON_DELIVERY_LIMIT_MS) {
+    			record.status = Invoice.Status.DELIVERED;
+    		} else if (record.status == Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
+    			record.status = Invoice.Status.FINISHED;
+    		}
+    	}
+		return false;
     }
     
     public static List<Product> read(String filepath) throws FileNotFoundException {
