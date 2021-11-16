@@ -36,12 +36,14 @@ public class ObjectPoolThread<T> extends Thread {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-			for (int i = 0; i < size(); i++) {
-				if (routine.apply(objectPool.get(i)) == true) {
-					objectPool.remove(i);
-				} else {
-					continue;
+			} else {
+				notify();
+				for (int i = 0; i < size(); i++) {
+					if (routine.apply(objectPool.get(i)) == true) {
+						objectPool.remove(i);
+					} else {
+						continue;
+					}
 				}
 			}
 		}
