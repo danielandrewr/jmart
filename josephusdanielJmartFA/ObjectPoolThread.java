@@ -29,24 +29,53 @@ public class ObjectPoolThread<T> extends Thread {
 	}
 	
 	public void run() {
-		while (!Thread.interrupted() && !exitSignal) {
-			if (objectPool.isEmpty()) {
+		
+		while(exitSignal == false) {
+			try {
+				for (T object : objectPool) {
+					if (routine.apply(object) != true) {
+						try {
+							wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					} else {
+						objectPool.remove(object);
+					}
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			
+			if (size() != 0) {
+				notify();
+			} else {
 				try {
 					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			} else {
-				notify();
-				for (int i = 0; i < size(); i++) {
-					if (routine.apply(objectPool.get(i)) == true) {
-						objectPool.remove(i);
-					} else {
-						continue;
-					}
-				}
 			}
 		}
+		
+//		while (!Thread.interrupted() && !exitSignal) {
+//			if (objectPool.isEmpty()) {
+//				try {
+//					wait();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			} else {
+//				notify();
+//				for (int i = 0; i < size(); i++) {
+//					if (routine.apply(objectPool.get(i)) == true) {
+//						objectPool.remove(i);
+//					} else {
+//						continue;
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	public int size() {
