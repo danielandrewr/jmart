@@ -26,39 +26,43 @@ public class Jmart {
 	}
 	
     public static void main(String[] args) {
-//    	try {
-//    		JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
-//    		ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP", Jmart::paymentTimekeeper);
-//    		paymentPool.start();
-//    		table.forEach(payment -> paymentPool.add(payment));
-//    		while (paymentPool.size() != 0);
-//    		paymentPool.exit();
-//    		while (paymentPool.isAlive());
-//    		System.out.println("Thread exited successfully");
-//    		Gson gson = new Gson();
-//    		table.forEach(payment -> {
-//    			String history = gson.toJson(payment.history);
-//    			System.out.println(history);
-//    		});
-//    	} catch (Throwable t) {
-//    		t.printStackTrace();
-//    	}
+    	try {
+    		JsonTable<Payment> table = new JsonTable<>(Payment.class, "/assets/randomPaymentList.json");
+    		ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP", Jmart::paymentTimekeeper);
+    		paymentPool.start();
+    		table.forEach(payment -> paymentPool.add(payment));
+    		while (paymentPool.size() != 0);
+    		paymentPool.exit();
+    		while (paymentPool.isAlive());
+    		System.out.println("Thread exited successfully");
+    		Gson gson = new Gson();
+    		table.forEach(payment -> {
+    			String history = gson.toJson(payment.history);
+    			System.out.println(history);
+    		});
+    	} catch (Throwable t) {
+    		t.printStackTrace();
+    	}
     }
     
     public static boolean paymentTimekeeper(Payment payment) {
     	long startTime = System.currentTimeMillis();
-    	for (Record record : payment.history) {
-    		long time_elapsed = System.currentTimeMillis() - startTime;
-    		if (record.status == Status.WAITING_CONFIRMATION && time_elapsed > WAITING_CONF_LIMIT_MS) {
-    			record.status = Invoice.Status.FAILED;
-    		} else if (record.status == Status.ON_PROGRESS && time_elapsed > ON_PROGRESS_LIMIT_MS) {
-    			record.status = Invoice.Status.FAILED;
-    		} else if (record.status == Status.ON_DELIVERY && time_elapsed > ON_DELIVERY_LIMIT_MS) {
-    			record.status = Invoice.Status.DELIVERED;
-    		} else if (record.status == Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
-    			record.status = Invoice.Status.FINISHED;
-    		}
-    	}
+    	
+    	Record record = payment.history.get(payment.history.size() - 1);
+		long time_elapsed = System.currentTimeMillis() - startTime;
+		if (record.status == Status.WAITING_CONFIRMATION && time_elapsed > WAITING_CONF_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+			return true;
+		} else if (record.status == Status.ON_PROGRESS && time_elapsed > ON_PROGRESS_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+			return true;
+		} else if (record.status == Status.ON_DELIVERY && time_elapsed > ON_DELIVERY_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Berhasil"));
+			return true;
+		} else if (record.status == Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Berhasil"));
+			return true;
+		}
 		return false;
     }
     

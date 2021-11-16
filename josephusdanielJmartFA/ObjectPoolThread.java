@@ -32,18 +32,16 @@ public class ObjectPoolThread<T> extends Thread {
 		while (!Thread.interrupted() && !exitSignal) {
 			if (objectPool.isEmpty()) {
 				try {
-					Thread.class.wait();
+					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			} else {
-				notify();
-				for (T object : objectPool) {
-					if (routine.apply(object) == true) {
-						objectPool.remove(object);
-					} else {
-						continue;
-					}
+			}
+			for (int i = 0; i < size(); i++) {
+				if (routine.apply(objectPool.get(i)) == true) {
+					objectPool.remove(i);
+				} else {
+					continue;
 				}
 			}
 		}

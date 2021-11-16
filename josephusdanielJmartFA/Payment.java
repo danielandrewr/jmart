@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Payment extends Invoice
 {
-	class Record {
+	static class Record {
 		public final Date date;
 		public String message;
 		public Status status;
