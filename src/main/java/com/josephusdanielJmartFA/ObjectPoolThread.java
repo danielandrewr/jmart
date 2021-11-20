@@ -12,19 +12,21 @@ public class ObjectPoolThread<T> extends Thread {
 	public ObjectPoolThread(String name, Function<T, Boolean> routine) {
 		super(name);
 		this.routine = routine;
+		this.objectPool = new Vector<T>();
 	}
 	
 	public ObjectPoolThread(Function<T, Boolean> routine) {
 		super();
 		this.routine = routine;
+		this.objectPool = new Vector<T>();
 	}
-	
+
 	public synchronized void add(T object) {
-		objectPool.add(object);
+		this.objectPool.add(object);
 	}
 	
 	public synchronized void exit() {
-		exitSignal = true;
+		this.exitSignal = true;
 	}
 	
 	public void run() {

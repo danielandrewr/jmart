@@ -1,6 +1,9 @@
 package com.josephusdanielJmartFA;
 
 import java.util.regex.Pattern;
+
+import com.josephusdanielJmartFA.dbjson.Serializable;
+
 import java.util.regex.Matcher;
 
 public class Account extends Serializable
@@ -11,12 +14,14 @@ public class Account extends Serializable
    public String email;
    public String password;
    public double balance;
+   public Store store;
 
    public Account(String name, String email, String password, double balance) {
        this.name = name;
        this.email = email;
        this.password = password;
        this.balance = balance;
+       this.store = null;
    }
    
    public String toString() {

@@ -292,6 +292,8 @@ public class Algorithm {
 	}
 	
 	public static <T> List<T> paginate(Iterator<T> iterator, int page, int pageSize, Predicate<T> pred) {
+		if (page < 0 || pageSize < 0) return null;
+		
 		List<T> paginated = new ArrayList<>();
 		int index = 0;
 		int startingPage = page * pageSize;

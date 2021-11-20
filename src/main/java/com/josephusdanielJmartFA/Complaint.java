@@ -1,6 +1,9 @@
 package com.josephusdanielJmartFA;
 
 import java.util.Date;
+
+import com.josephusdanielJmartFA.dbjson.Serializable;
+
 import java.text.SimpleDateFormat;
 
 public class Complaint extends Serializable {

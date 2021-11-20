@@ -1,5 +1,7 @@
 package com.josephusdanielJmartFA;
 
+import com.josephusdanielJmartFA.dbjson.Serializable;
+
 public class Product extends Serializable
 {
     public String name;

@@ -2,6 +2,8 @@ package com.josephusdanielJmartFA;
 
 import java.util.Date;
 
+import com.josephusdanielJmartFA.dbjson.Serializable;
+
 public abstract class Invoice extends Serializable
 {
     enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED, DELIVERED };
@@ -13,7 +15,7 @@ public abstract class Invoice extends Serializable
     public int complaintId;
     public Rating rating;
     
-    protected Invoice(int buyerId, int productId) {
+    public Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
         this.productId = productId;
         this.date = java.util.Calendar.getInstance().getTime();
