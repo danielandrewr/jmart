@@ -6,8 +6,8 @@ import com.josephusdanielJmartFA.dbjson.Serializable;
 
 public abstract class Invoice extends Serializable
 {
-    enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED, DELIVERED };
-    enum Rating { NONE, BAD, NEUTRAL, GOOD };
+    public enum Status { WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED, DELIVERED };
+    public enum Rating { NONE, BAD, NEUTRAL, GOOD };
     
     public Date date;
     public int buyerId;
@@ -15,7 +15,7 @@ public abstract class Invoice extends Serializable
     public int complaintId;
     public Rating rating;
     
-    public Invoice(int buyerId, int productId) {
+    protected Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
         this.productId = productId;
         this.date = java.util.Calendar.getInstance().getTime();

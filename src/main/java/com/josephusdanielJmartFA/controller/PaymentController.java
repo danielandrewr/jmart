@@ -2,8 +2,10 @@ package com.josephusdanielJmartFA.controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.josephusdanielJmartFA.Invoice;
 import com.josephusdanielJmartFA.ObjectPoolThread;
 import com.josephusdanielJmartFA.Payment;
+import com.josephusdanielJmartFA.Payment.Record;
 import com.josephusdanielJmartFA.dbjson.JsonAutowired;
 import com.josephusdanielJmartFA.dbjson.JsonTable;
 
@@ -19,7 +21,7 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	public static JsonTable<Payment> paymentTable;
 	public static ObjectPoolThread<Payment> poolThread; 
 	static {
-		//new ObjectPoolThread<Payment>("Payment-Thread", PaymentController::timekeeper);
+		new ObjectPoolThread<Payment>("Payment-Thread", PaymentController::timekeeper);
 		poolThread.start();
 	}
 	
@@ -51,25 +53,25 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 		return false;
 	}
 	
-//	private boolean timekeeper(Payment payment) {
-//		long startTime = System.currentTimeMillis();
-//    	
-//    	Record record = payment.history.get(payment.history.size() - 1);
-//		long time_elapsed = System.currentTimeMillis() - startTime;
-//		if (record.status == Invoice.Status.WAITING_CONFIRMATION && time_elapsed > WAITING_CONF_LIMIT_MS) {
-//			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
-//		} else if (record.status == Invoice.Status.ON_PROGRESS && time_elapsed > ON_PROGRESS_LIMIT_MS) {
-//			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
-//		} else if (record.status == Invoice.Status.ON_DELIVERY && time_elapsed > ON_DELIVERY_LIMIT_MS) {
-//			payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Berhasil"));
-//		} else if (record.status == Invoice.Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
-//			payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Berhasil"));
-//		}
-//		
-//		if (record.status == Invoice.Status.FAILED && record.status == Invoice.Status.FINISHED) {
-//			return true;
-//		}
-//		
-//		return false;
-//	}
+	private static boolean timekeeper(Payment payment) {
+		long startTime = System.currentTimeMillis();
+    	
+    	Record record = payment.history.get(payment.history.size() - 1);
+		long time_elapsed = System.currentTimeMillis() - startTime;
+		if (record.status == Invoice.Status.WAITING_CONFIRMATION && time_elapsed > WAITING_CONF_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+		} else if (record.status == Invoice.Status.ON_PROGRESS && time_elapsed > ON_PROGRESS_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+		} else if (record.status == Invoice.Status.ON_DELIVERY && time_elapsed > ON_DELIVERY_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Berhasil"));
+		} else if (record.status == Invoice.Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
+			payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Berhasil"));
+		}
+		
+		if (record.status == Invoice.Status.FAILED && record.status == Invoice.Status.FINISHED) {
+			return true;
+		}
+		
+		return false;
+	}
 }
