@@ -15,13 +15,13 @@ public interface BasicGetController<T extends Serializable> {
 		for (T obj : getJsonTable()) {
 			if (obj.id == id) return obj;
 		}
-		return getJsonTable().get(id);
+		return null;
 	}
 	
 	public abstract JsonTable<T> getJsonTable();
 	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public default List<T> getPage(@RequestParam(defaultValue = "2") int page, @RequestParam(defaultValue = "5")int pageSize) {
+	@GetMapping("/page")
+	public default List<T> getPage(@RequestParam(defaultValue="2") int page, @RequestParam(defaultValue="5") int pageSize) {
 		return Algorithm.paginate(getJsonTable(), page, pageSize, (e) -> true);
 	}
 }

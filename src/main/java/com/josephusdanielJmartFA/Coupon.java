@@ -9,8 +9,8 @@ public class Coupon extends Serializable
     public final int code;
     public final double cut;
     public final Type type;
-    public final double minimum;
-    private boolean used;
+    public static double minimum;
+    private static boolean used;
 
     public Coupon(String name, int code, Type type, double cut, double minimum)
     {
@@ -18,17 +18,17 @@ public class Coupon extends Serializable
         this.code = code;
         this.type = type;
         this.cut = cut;
-        this.minimum = minimum;
-        this.used = false;
+        Coupon.minimum = minimum;
+        used = false;
     }
     
     public boolean isUsed() {
-        return this.used;
+        return used;
     }
     
-    public boolean canApply(Treasury pricetag) {
+    public boolean canApply(double price, double discount) {
         
-        if ((used == false) && (Treasury.getAdjustedPrice(10000, 0.5) >= this.minimum)) {
+        if ((used == false) && (Treasury.getAdjustedPrice(price, discount) >= Coupon.minimum)) {
             return true;
         }
         return false;

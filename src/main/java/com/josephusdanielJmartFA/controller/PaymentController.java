@@ -26,20 +26,17 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	}
 	
 	@PostMapping("/{id}/accept")
-	public boolean accept(int id) {
-		
+	public boolean accept(@PathVariable int id) {
 		return false;
 	}
 	
 	@PostMapping("/{id}/cancel")
-	public boolean cancel(int id) {
-		
+	public boolean cancel(@PathVariable int id) {
 		return false;
 	}
 	
 	@PostMapping("/create")
 	public Payment create(@RequestParam int buyerId, @RequestParam int productId, @RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan) {
-		
 		return null;
 	}
 	
@@ -48,8 +45,7 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	}
 	
 	@PostMapping("/{id}/submit")
-	public boolean submit(int id, @RequestParam String receipt) {
-		
+	public boolean submit(@PathVariable int id, @RequestParam String receipt) {
 		return false;
 	}
 	
@@ -67,11 +63,9 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 		} else if (record.status == Invoice.Status.DELIVERED && time_elapsed > DELIVERED_LIMIT_MS) {
 			payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Berhasil"));
 		}
-		
 		if (record.status == Invoice.Status.FAILED && record.status == Invoice.Status.FINISHED) {
 			return true;
 		}
-		
 		return false;
 	}
 }
