@@ -43,7 +43,7 @@ public class ProductController implements BasicGetController<Product> {
 	}
 	
 	@GetMapping("/getFiltered")
-	public List<Product> getProductFiltered(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="5") int pageSize, int accountId, String search, int minPrice, int maxPrice, ProductCategory category) {
+	public List<Product> getProductFiltered(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="5") int pageSize, @RequestParam int accountId, @RequestParam String search, @RequestParam int minPrice, @RequestParam int maxPrice, @RequestParam ProductCategory category) {
 		List<Product> filtered = new ArrayList<>();
 		
 		for (Product product : getJsonTable()) {
