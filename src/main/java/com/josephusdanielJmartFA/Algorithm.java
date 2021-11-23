@@ -144,7 +144,7 @@ public class Algorithm {
 	public static <T> T find(Iterator<T> iterator, Predicate<T> predicate) {
 		while(iterator.hasNext()) {
 			T e = iterator.next();
-			if (predicate.predicate(e)) {
+			if (predicate.predicate(e) && e.equals(predicate)) {
 				return e;
 			}
 		}

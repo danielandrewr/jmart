@@ -39,7 +39,7 @@ public class AccountController implements BasicGetController<Account> {
 	
 	@PostMapping("/register")
 	public Account register(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-		if ((!name.isBlank())) {
+		if (!name.isBlank()) {
 			if (REGEX_PATTERN_EMAIL.matcher(email).matches() && REGEX_PATTERN_PASSWORD.matcher(password).matches()) {
 				for (Account account : getJsonTable()) {
 					if (account.email.equals(email)) {

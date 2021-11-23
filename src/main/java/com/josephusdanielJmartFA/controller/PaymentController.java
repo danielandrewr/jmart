@@ -2,10 +2,14 @@ package com.josephusdanielJmartFA.controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.josephusdanielJmartFA.Account;
+import com.josephusdanielJmartFA.Algorithm;
 import com.josephusdanielJmartFA.Invoice;
 import com.josephusdanielJmartFA.ObjectPoolThread;
 import com.josephusdanielJmartFA.Payment;
 import com.josephusdanielJmartFA.Payment.Record;
+import com.josephusdanielJmartFA.Product;
+import com.josephusdanielJmartFA.Shipment;
 import com.josephusdanielJmartFA.dbjson.JsonAutowired;
 import com.josephusdanielJmartFA.dbjson.JsonTable;
 
@@ -27,16 +31,45 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	
 	@PostMapping("/{id}/accept")
 	public boolean accept(@PathVariable int id) {
+		for (Payment payment : getJsonTable()) {
+			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)) {
+				payment.history.add(new Record(Invoice.Status.ON_PROGRESS, "Dalam Proses"));
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	@PostMapping("/{id}/cancel")
 	public boolean cancel(@PathVariable int id) {
+		for (Payment payment : getJsonTable()) {
+			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)) {
+				payment.history.add(new Record(Invoice.Status.CANCELLED, "DIBATALKAN"));
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	@PostMapping("/create")
 	public Payment create(@RequestParam int buyerId, @RequestParam int productId, @RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan) {
+		Account account = Algorithm.<Account>find(AccountController.accountTable, (e) -> e.id == buyerId);
+		Product product = Algorithm.<Product>find(ProductController.productTable, (e) -> e.id == productId);
+		
+		if ((account != null) && (product != null)) {
+			Payment payment = new Payment(buyerId, productId, productCount, null);
+			double totalPriceToPay = payment.getTotalPay(product);
+			
+			if (account.balance >= totalPriceToPay ) {
+				Shipment shipmentDetail = new Shipment(shipmentAddress, 0, shipmentPlan, null);
+				account.balance -= totalPriceToPay; // Cek lagi nanti bagian ini
+				payment = new Payment(buyerId, productId, productCount, shipmentDetail);
+				payment.history.add(new Record(Invoice.Status.WAITING_CONFIRMATION, "Menunggu Konfirmasi"));
+				paymentTable.add(payment);
+				poolThread.add(payment);
+				return payment;
+			}
+		}
 		return null;
 	}
 	
@@ -46,6 +79,15 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	
 	@PostMapping("/{id}/submit")
 	public boolean submit(@PathVariable int id, @RequestParam String receipt) {
+		for (Payment payment : getJsonTable()) {
+			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS)) {
+				if (!payment.shipment.receipt.isBlank()) {
+					payment.shipment.receipt = receipt;
+					payment.history.add(new Record(Invoice.Status.ON_DELIVERY, "Dalam Pengiriman"));
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	
