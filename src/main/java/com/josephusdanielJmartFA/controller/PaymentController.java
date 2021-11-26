@@ -17,10 +17,10 @@ import com.josephusdanielJmartFA.dbjson.JsonTable;
 @RequestMapping("/payment")
 public abstract class PaymentController implements BasicGetController<Payment> {
 
-	public static final long DELIVERED_LIMIT_MS = 10;
-	public static final long ON_DELIVERY_LIMIT_MS = 10;
-	public static final long ON_PROGRESS_LIMIT_MS = 10;
-	public static final long WAITING_CONF_LIMIT_MS = 10;
+	public static final long DELIVERED_LIMIT_MS = 1;
+	public static final long ON_DELIVERY_LIMIT_MS = 1;
+	public static final long ON_PROGRESS_LIMIT_MS = 1;
+	public static final long WAITING_CONF_LIMIT_MS = 1;
 	@JsonAutowired(filepath = "C:\\Users\\Daniel\\Documents\\Daniel\\Semester 3\\OOP\\Praktikum\\Modul 1\\jmart\\src\\main\\java\\com\\assets\\Payment.json", value = Payment.class)
 	public static JsonTable<Payment> paymentTable;
 	public static ObjectPoolThread<Payment> poolThread; 
@@ -81,7 +81,7 @@ public abstract class PaymentController implements BasicGetController<Payment> {
 	public boolean submit(@PathVariable int id, @RequestParam String receipt) {
 		for (Payment payment : getJsonTable()) {
 			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS)) {
-				if (!payment.shipment.receipt.isBlank()) {
+				if (!receipt.isBlank()) {
 					payment.shipment.receipt = receipt;
 					payment.history.add(new Record(Invoice.Status.ON_DELIVERY, "Dalam Pengiriman"));
 					return true;
