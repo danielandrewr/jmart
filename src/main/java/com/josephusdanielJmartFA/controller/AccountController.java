@@ -30,7 +30,7 @@ public class AccountController implements BasicGetController<Account> {
 	@PostMapping("/login")
 	public Account login(@RequestParam String email, @RequestParam String password) {
 		for (Account account : getJsonTable()) {
-			if (account.email.equals(email) && hashMD5(account.password) == hashMD5(password)) {
+			if (account.email.equals(email) && account.password.equals(hashMD5(password))) {
 				return account;
 			}
 		}
