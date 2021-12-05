@@ -48,17 +48,15 @@ public class ProductController implements BasicGetController<Product> {
 		
 		for (Product product : getJsonTable()) {
 			if (product.accountId == accountId || product.name == search || product.category == category) {
-				filtered.add(product);
+				if (minPrice == 0.0) {
+		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price <= maxPrice));
+		    	} else if (maxPrice == 0.0) {
+		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice));
+		    	} else {
+		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice && e.price <= maxPrice));
+		    	}
 			}
 		}
-		
-		if (minPrice == 0.0) {
-    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price <= maxPrice));
-    	} else if (maxPrice == 0.0) {
-    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice));
-    	} else {
-    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice && e.price <= maxPrice));
-    	}
 		
 		return filtered;
 	}
