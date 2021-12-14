@@ -43,20 +43,22 @@ public class ProductController implements BasicGetController<Product> {
 	}
 	
 	@GetMapping("/getFiltered")
-	public List<Product> getProductFiltered(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="5") int pageSize, @RequestParam int accountId, @RequestParam String search, @RequestParam int minPrice, @RequestParam int maxPrice, @RequestParam ProductCategory category) {
+	public List<Product> getProductFiltered(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="5") int pageSize, @RequestParam int accountId, @RequestParam String search, @RequestParam int minPrice, @RequestParam int maxPrice, @RequestParam ProductCategory category, @RequestParam boolean conditionUsed) {
 		List<Product> filtered = new ArrayList<>();
 		
 		for (Product product : getJsonTable()) {
-			if (product.accountId == accountId || product.name == search || product.category == category) {
-				if (minPrice == 0.0) {
-		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price <= maxPrice));
-		    	} else if (maxPrice == 0.0) {
-		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice));
-		    	} else {
-		    		filtered.addAll(Algorithm.<Product>collect(getJsonTable(), (e) -> e.price >= minPrice && e.price <= maxPrice));
-		    	}
-			}
-		}
+            if (product.accountId == accountId) {
+                if (product.conditionUsed == conditionUsed) {
+                    if (product.category == category) {
+                        if (maxPrice == 0.0 && minPrice != 0.0) {
+                            if (product.price >= minPrice) 
+                                filtered.add(product);
+                        } else if (product.price >= minPrice && product.price <= maxPrice)
+                                filtered.add(product);
+                    }
+                }
+            }
+        }
 		
 		return filtered;
 	}
