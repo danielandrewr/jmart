@@ -47,7 +47,7 @@ public class ProductController implements BasicGetController<Product> {
 		List<Product> filtered = new ArrayList<>();
 		
 		for (Product product : getJsonTable()) {
-            if (product.accountId == accountId) {
+            if (product.accountId == accountId && product.name.contains(search)) {
                 if (product.conditionUsed == conditionUsed) {
                     if (product.category == category) {
                         if (maxPrice == 0.0 && minPrice != 0.0) {
