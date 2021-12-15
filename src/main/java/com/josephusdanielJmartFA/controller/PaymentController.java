@@ -1,5 +1,8 @@
 package com.josephusdanielJmartFA.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.josephusdanielJmartFA.Account;
@@ -89,6 +92,12 @@ public class PaymentController implements BasicGetController<Payment> {
 			}
 		}
 		return false;
+	}
+	
+	@GetMapping("/{id}/getPayments")
+	public List<Payment> getPayment(@PathVariable int accountId) {
+		List<Payment> payments = Algorithm.<Payment>collect(getJsonTable(), (e) -> e.buyerId == accountId);
+		return payments;
 	}
 	
 //	private static boolean timekeeper(Payment payment) {
