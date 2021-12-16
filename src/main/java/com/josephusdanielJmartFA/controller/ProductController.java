@@ -47,7 +47,7 @@ public class ProductController implements BasicGetController<Product> {
 		List<Product> filtered = new ArrayList<>();
 		
 		for (Product product : getJsonTable()) {
-            if (product.accountId == accountId && product.name.contains(search)) {
+            if (product.name.toLowerCase().contains(search.toLowerCase())) {
                 if (product.conditionUsed == conditionUsed) {
                     if (product.category == category) {
                         if (maxPrice == 0.0 && minPrice != 0.0) {
@@ -61,5 +61,23 @@ public class ProductController implements BasicGetController<Product> {
         }
 		
 		return filtered;
+	}
+	
+	@GetMapping("/getProductById")
+	public Product getProductById(@RequestParam int productId) {
+		Product foundProduct = Algorithm.<Product>find(getJsonTable(), (e) -> e.id == productId);
+		if (foundProduct != null) {
+			return foundProduct;
+		}
+		return null;
+	}
+	
+	@GetMapping("/getProductByName")
+	public Product getProductByName(@RequestParam String search) {
+		Product foundProduct = Algorithm.<Product>find(getJsonTable(), (e) -> e.name.toLowerCase().equals(search.toLowerCase()));
+		if (foundProduct != null) {
+			return foundProduct;
+		}
+		return null;
 	}
 }
