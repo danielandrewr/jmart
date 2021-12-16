@@ -5,9 +5,10 @@ public class PhoneTopUp extends Invoice {
 	public String phoneNumber;
 	public Status status;
 	
-	public PhoneTopUp(int buyerId, int productId, String phoneNumber) {
+	public PhoneTopUp(int buyerId, int productId, String phoneNumber, Status status) {
 		super(buyerId, productId);
 		this.phoneNumber = phoneNumber;
+		this.status = status;
 	}
 
 	@Override
