@@ -9,27 +9,32 @@ public class Algorithm {
 		
 	}
 	
+	// Collect objects to List from array for T predicate
 	public static <T> List<T> collect(T[] array, T value) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		Predicate<T> predicate = value::equals;
 		return collect(iterator, predicate);
 	}
 	
+	// Collect objects to list from iterable for T predicate
 	public static <T> List<T> collect(Iterable<T> iterable, T value) {
 		Predicate<T> predicate = value::equals;
 		return collect(iterable, predicate);
 	}
 	
+	// Collect objects to list from array for Predicate<T>
 	public static <T> List<T> collect(T[] array, Predicate<T> predicate) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		return collect(iterator, predicate);
 	}
 	
+	// Collect objects to list from iterable for Predicate<T>
 	public static <T> List<T> collect(Iterable<T> iterable, Predicate<T> predicate) {
 		Iterator<T> iterator = iterable.iterator();
 		return collect(iterator, predicate);
 	}
 	
+	// Collect objects to list from iterator for Predicate<T>
 	public static <T> List<T> collect(Iterator<T> iterator, Predicate<T> predicate) {
 		List<T> collectList = new ArrayList<T>();
 		while (iterator.hasNext()) {

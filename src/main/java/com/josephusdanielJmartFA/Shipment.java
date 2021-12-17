@@ -4,8 +4,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+/**
+ * Shipment Class Model
+ * @author Daniel
+ *
+ */
 public class Shipment {
 	
+	/**
+	 * Inner class to define Shipment Plan
+	 * @author Daniel
+	 *
+	 */
     static class Plan {
     	public final byte bit;
     	
@@ -26,6 +36,13 @@ public class Shipment {
     public byte plan;
     public String receipt;
     
+    /**
+     * Shipment Constructor
+     * @param address
+     * @param cost
+     * @param plan
+     * @param receipt
+     */
     public Shipment(String address, int cost, byte plan, String receipt) {
         this.address = address;
         this.cost = cost;
@@ -33,6 +50,11 @@ public class Shipment {
         this.receipt = receipt;
     }
     
+    /**
+     * Convert from byte to Estimated Arrival in Dates
+     * @param reference
+     * @return
+     */
     public String getEstimatedArrival(Date reference) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(reference);
@@ -53,6 +75,11 @@ public class Shipment {
         }
     }
     
+    /**
+     * Check if Plan is a Duration or not
+     * @param reference
+     * @return
+     */
     public boolean isDuration(Plan reference) {
         if ((this.plan & (1 << (reference.bit - 1))) >= 0) {
             return true;

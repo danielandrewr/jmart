@@ -1,10 +1,21 @@
 package com.josephusdanielJmartFA;
 
+/**
+ * Treasury Class Model
+ * @author Daniel
+ *
+ */
 public class Treasury {
     public static final double COMMISSION_MULTIPLIER = 0.05;
     public static final double BOTTOM_FEE = 1000.0;
     public static final double BOTTOM_PRICE = 20000.0;
     
+    /**
+     * Counts the admin fee 
+     * @param price
+     * @param discount
+     * @return
+     */
     public static double getAdminFee(double price, double discount) {
         double hargaDiskon = getDiscountedPrice(price, discount);
         
@@ -15,6 +26,12 @@ public class Treasury {
         return (hargaDiskon * COMMISSION_MULTIPLIER);
     }
     
+    /**
+     * Counts the Discounted Price
+     * @param price
+     * @param discount
+     * @return
+     */
     public static double getDiscountedPrice(double price, double discount) {
         if (discount > 100.0) {
             return 0.0;

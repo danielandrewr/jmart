@@ -15,6 +15,11 @@ import com.josephusdanielJmartFA.Product;
 import com.josephusdanielJmartFA.dbjson.JsonAutowired;
 import com.josephusdanielJmartFA.dbjson.JsonTable;
 
+/**
+ * PhoneTopUp Control Class
+ * @author Daniel
+ *
+ */
 @RestController
 @RequestMapping("/phoneTopUp")
 public class PhoneTopUpController implements BasicGetController<PhoneTopUp> {
@@ -25,6 +30,13 @@ public class PhoneTopUpController implements BasicGetController<PhoneTopUp> {
 	@JsonAutowired(filepath = "\\assets\\PhoneTopUp.json", value = PhoneTopUp.class)
 	public static JsonTable<PhoneTopUp> phoneTopUpTable;
 	
+	/**
+	 * Create a new TopUp
+	 * @param buyerId
+	 * @param productId
+	 * @param phoneNumber
+	 * @return
+	 */
 	@PostMapping("/create")
 	public PhoneTopUp create(@RequestParam int buyerId, @RequestParam int productId, @RequestParam String phoneNumber) {
 		Account account = Algorithm.<Account>find(AccountController.accountTable, (e) -> e.id == buyerId);
@@ -44,6 +56,9 @@ public class PhoneTopUpController implements BasicGetController<PhoneTopUp> {
 		return null;
 	}
 	
+	/**
+	 * Returns phoneTopUp Table
+	 */
 	@Override
 	public JsonTable<PhoneTopUp> getJsonTable() {
 		return phoneTopUpTable;

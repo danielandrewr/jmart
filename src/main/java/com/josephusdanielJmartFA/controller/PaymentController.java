@@ -16,10 +16,15 @@ import com.josephusdanielJmartFA.Shipment;
 import com.josephusdanielJmartFA.dbjson.JsonAutowired;
 import com.josephusdanielJmartFA.dbjson.JsonTable;
 
+/**
+ * Payment Control Class
+ * @author Daniel
+ *
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {
-
+	
 	public static final long DELIVERED_LIMIT_MS = 1;
 	public static final long ON_DELIVERY_LIMIT_MS = 1;
 	public static final long ON_PROGRESS_LIMIT_MS = 1;
@@ -32,6 +37,11 @@ public class PaymentController implements BasicGetController<Payment> {
 //		poolThread.start();
 //	}
 	
+	/**
+	 * Accepts a payment, Used by Store Owner
+	 * @param id
+	 * @return
+	 */
 	@PostMapping("/{id}/accept")
 	public boolean accept(@PathVariable int id) {
 		for (Payment payment : getJsonTable()) {
@@ -43,6 +53,11 @@ public class PaymentController implements BasicGetController<Payment> {
 		return false;
 	}
 	
+	/**
+	 * Cancels a payment, Used by Store Owner or Buyer
+	 * @param id
+	 * @return
+	 */
 	@PostMapping("/{id}/cancel")
 	public boolean cancel(@PathVariable int id) {
 		for (Payment payment : getJsonTable()) {
@@ -54,6 +69,15 @@ public class PaymentController implements BasicGetController<Payment> {
 		return false;
 	}
 	
+	/**
+	 * Creates a new payment
+	 * @param buyerId
+	 * @param productId
+	 * @param productCount
+	 * @param shipmentAddress
+	 * @param shipmentPlan
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Payment create(@RequestParam int buyerId, @RequestParam int productId, @RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan) {
 		Account account = Algorithm.<Account>find(AccountController.accountTable, (e) -> e.id == buyerId);
@@ -76,15 +100,24 @@ public class PaymentController implements BasicGetController<Payment> {
 		return null;
 	}
 	
+	/**
+	 * Get jsonTable
+	 */
 	public JsonTable<Payment> getJsonTable() {
 		return paymentTable;
 	}
 	
+	/**
+	 * Submits a payment for delivery, Used by Store Owner
+	 * @param id
+	 * @param receipt
+	 * @return
+	 */
 	@PostMapping("/{id}/submit")
 	public boolean submit(@PathVariable int id, @RequestParam String receipt) {
 		for (Payment payment : getJsonTable()) {
 			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS)) {
-				if (receipt.isBlank()) {
+				if (!receipt.isBlank()) {
 					payment.shipment.receipt = receipt;
 					payment.history.add(new Record(Invoice.Status.ON_DELIVERY, "Dalam Pengiriman"));
 					return true;
@@ -94,19 +127,29 @@ public class PaymentController implements BasicGetController<Payment> {
 		return false;
 	}
 	
+	/**
+	 * Get Payment with matching accountId to a List of Payment
+	 * @param accountId
+	 * @return
+	 */
 	@GetMapping("/getPayments")
 	public List<Payment> getPayment(@RequestParam int accountId) {
 		List<Payment> payments = Algorithm.<Payment>collect(getJsonTable(), (e) -> e.buyerId == accountId);
 		return payments;
 	}
 	
+	/**
+	 * Get Payment with matching accountId to a List of Payment for Store Owner
+	 * @param accountId
+	 * @return
+	 */
 	@GetMapping("/getStorePayments")
 	public List<Payment> getStorePayments(@RequestParam int accountId) {
 		List<Payment> filtered = new ArrayList<>();
 		int tempId = 0;
 		for (Product product : ProductController.productTable) {
 			if (product.accountId == accountId) {
-				tempId = product.accountId;
+				tempId = product.id;
 				for (Payment payment : paymentTable) {
 					if (payment.productId == tempId) {
 						filtered.add(payment);

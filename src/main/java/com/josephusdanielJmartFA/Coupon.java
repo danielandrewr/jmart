@@ -2,6 +2,11 @@ package com.josephusdanielJmartFA;
 
 import com.josephusdanielJmartFA.dbjson.Serializable;
 
+/**
+ * Coupon Model Class
+ * @author Daniel
+ *
+ */
 public class Coupon extends Serializable
 {
     // instance variables - replace the example below with your own
@@ -12,6 +17,14 @@ public class Coupon extends Serializable
     public static double minimum;
     private static boolean used;
 
+    /**
+     * Coupon Constructor
+     * @param name
+     * @param code
+     * @param type
+     * @param cut
+     * @param minimum
+     */
     public Coupon(String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
@@ -22,10 +35,20 @@ public class Coupon extends Serializable
         used = false;
     }
     
+    /**
+     * Returns value to check if a coupon has already been used or not
+     * @return
+     */
     public boolean isUsed() {
         return used;
     }
     
+    /**
+     * Check whether a coupon can be apllied or not
+     * @param price
+     * @param discount
+     * @return
+     */
     public boolean canApply(double price, double discount) {
         
         if ((used == false) && (Treasury.getAdjustedPrice(price, discount) >= Coupon.minimum)) {
@@ -34,6 +57,12 @@ public class Coupon extends Serializable
         return false;
     }
     
+    /**
+     * Applies coupon to a certain Product's price
+     * @param price
+     * @param discount
+     * @return
+     */
     @SuppressWarnings("static-access")
 	public double apply(double price, double discount) {
         this.used = true;

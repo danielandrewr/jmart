@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Account Control Class
+ * @author Daniel
+ *
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account> {
@@ -27,6 +32,12 @@ public class AccountController implements BasicGetController<Account> {
 		return accountTable;
 	}
 	
+	/**
+	 * Post Method to Login
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	@PostMapping("/login")
 	public Account login(@RequestParam String email, @RequestParam String password) {
 		for (Account account : getJsonTable()) {
@@ -37,6 +48,13 @@ public class AccountController implements BasicGetController<Account> {
 		return null;
 	}
 	
+	/**
+	 * Post Method to Register
+	 * @param name
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	@PostMapping("/register")
 	public Account register(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
 		if (!name.isBlank()) {
@@ -55,6 +73,14 @@ public class AccountController implements BasicGetController<Account> {
 		return null;
 	}
 	
+	/**
+	 * Post Method to Register Store
+	 * @param id
+	 * @param name
+	 * @param address
+	 * @param phoneNumber
+	 * @return
+	 */
 	@PostMapping("/{id}/registerStore")
 	public Store registerStore(@PathVariable int id, @RequestParam String name, @RequestParam String address, @RequestParam String phoneNumber) {
 		Store newStore = new Store(name, address, phoneNumber, 0.0);
@@ -67,6 +93,12 @@ public class AccountController implements BasicGetController<Account> {
 		return null;
 	}
 	
+	/**
+	 * Post Method to Top Balance Up
+	 * @param id
+	 * @param balance
+	 * @return
+	 */
 	@PostMapping("/{id}/topUp")
 	public boolean topUp(@PathVariable int id, @RequestParam double balance) {
 		for (Account account : accountTable) {
@@ -78,6 +110,11 @@ public class AccountController implements BasicGetController<Account> {
 		return false;
 	}
 	
+	/**
+	 * Hashes a password string to MD5
+	 * @param password
+	 * @return
+	 */
 	public String hashMD5(String password) {
 		String hashedPassword = null;
 		try {
