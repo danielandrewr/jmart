@@ -1,5 +1,6 @@
 package com.josephusdanielJmartFA.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -83,7 +84,7 @@ public class PaymentController implements BasicGetController<Payment> {
 	public boolean submit(@PathVariable int id, @RequestParam String receipt) {
 		for (Payment payment : getJsonTable()) {
 			if (payment.id == id && (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS)) {
-				if (!receipt.isBlank()) {
+				if (receipt.isBlank()) {
 					payment.shipment.receipt = receipt;
 					payment.history.add(new Record(Invoice.Status.ON_DELIVERY, "Dalam Pengiriman"));
 					return true;
@@ -97,6 +98,23 @@ public class PaymentController implements BasicGetController<Payment> {
 	public List<Payment> getPayment(@RequestParam int accountId) {
 		List<Payment> payments = Algorithm.<Payment>collect(getJsonTable(), (e) -> e.buyerId == accountId);
 		return payments;
+	}
+	
+	@GetMapping("/getStorePayments")
+	public List<Payment> getStorePayments(@RequestParam int accountId) {
+		List<Payment> filtered = new ArrayList<>();
+		int tempId = 0;
+		for (Product product : ProductController.productTable) {
+			if (product.accountId == accountId) {
+				tempId = product.accountId;
+				for (Payment payment : paymentTable) {
+					if (payment.productId == tempId) {
+						filtered.add(payment);
+					}
+				}
+			}
+		}
+		return filtered;
 	}
 	
 //	private static boolean timekeeper(Payment payment) {
