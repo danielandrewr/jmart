@@ -1,5 +1,12 @@
 package com.josephusdanielJmartFA;
 
+/**
+ * Unused
+ * @author Daniel
+ *
+ * @param <T>
+ * @param <U>
+ */
 public class Pair<T, U> {
 	
 	public T first;

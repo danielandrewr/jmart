@@ -70,7 +70,7 @@ public class ProductController implements BasicGetController<Product> {
 	}
 	
 	/**
-	 * Filter Products based on some parameters
+	 * Filter Products based on some parameters/conditions
 	 * @param page
 	 * @param pageSize
 	 * @param accountId
@@ -117,7 +117,7 @@ public class ProductController implements BasicGetController<Product> {
 	}
 	
 	/**
-	 * Get a product by name
+	 * Get a product by names
 	 * @param search
 	 * @return
 	 */

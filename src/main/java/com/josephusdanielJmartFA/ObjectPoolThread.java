@@ -86,6 +86,10 @@ public class ObjectPoolThread<T> extends Thread {
 		}
 	}
 	
+	/**
+	 * Returns the size (count) of objects inside the pool
+	 * @return
+	 */
 	public int size() {
 		return objectPool.size();
 	}
